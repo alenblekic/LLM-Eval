@@ -67,5 +67,5 @@ llm-eval-dashboard/
 └── public/
     ├── index.html
     ├── style.css
-    └── app.js
+    └── main.js
 ```
