@@ -46,7 +46,7 @@ Open `http://localhost:3000`.
 
 ## Deploying to Vercel
 
-The app is split into `src/app.js` (the Express app, no `listen()` call) and `api/index.js` (the Vercel serverless entry point that re-exports it). `vercel.json` routes `/api/*` to the serverless function and serves `public/` as static output.
+Vercel has zero-config Express support: it looks for a file that imports `express` and default-exports the app at one of a few conventional locations (`app.js`, `index.js`, `server.js`, or the same under `src/`). `src/app.js` already matches that pattern (`export default app`), so no `vercel.json` or `/api` wrapper is needed — deploying the repo as-is is enough. Static files in `public/**` are served directly by Vercel's CDN (Express's own `app.use(express.static(...))` is a no-op there, but still works for local dev).
 
 Set `GROQ_API_KEY` in the Vercel project's environment variables before deploying.
 
@@ -56,19 +56,16 @@ Note: the report endpoint is stateless by design — the browser sends back the 
 
 ```
 llm-eval-dashboard/
-├── api/
-│   └── index.js        # Vercel serverless entry point
 ├── data/
 │   └── test-cases.json # static fallback suite (?fixed=1)
 ├── src/
-│   ├── app.js           # Express app (routes, middleware)
+│   ├── app.js           # Express app (routes, middleware) — Vercel entry point
 │   ├── server.js         # local dev entry point (app.listen)
 │   ├── evaluator.js       # model calls + validation checks
 │   ├── generator.js        # randomized test-case generation
 │   └── reporter.js          # Markdown report builder
-├── public/
-│   ├── index.html
-│   ├── style.css
-│   └── app.js
-└── vercel.json
+└── public/
+    ├── index.html
+    ├── style.css
+    └── app.js
 ```
