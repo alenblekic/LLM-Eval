@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LLM Eval Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <button id="app-title" class="app-title" type="button" title="Refresh page">LLM Eval Dashboard</button>
+      <p class="subtitle">Amazon PPC search-term &amp; campaign structure audits &middot; llama-3.3-70b-versatile</p>
+    </div>
+    <div class="header-right">
+      <span id="status" class="status-line">Idle</span>
+      <button id="run-btn">Run Evaluation</button>
+      <button id="download-btn" disabled>Download Report</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="summary-cards" id="summary-cards" hidden>
+      <div class="card">
+        <span class="card-label">Accuracy</span>
+        <span class="card-value" id="card-accuracy">—</span>
+      </div>
+      <div class="card">
+        <span class="card-label">Pass Rate</span>
+        <span class="card-value" id="card-passrate">—</span>
+      </div>
+      <div class="card">
+        <span class="card-label">Hallucinations Flagged</span>
+        <span class="card-value" id="card-hallucinations">—</span>
+      </div>
+      <div class="card">
+        <span class="card-label">Avg Latency</span>
+        <span class="card-value" id="card-latency">—</span>
+      </div>
+    </section>
+
+    <section id="error-banner" class="error-banner" hidden></section>
+
+    <section class="manual-test">
+      <h2 class="section-title">Test a Single Input</h2>
+      <p class="section-subtitle">Run one input through the same validation pipeline used by the full evaluation.</p>
+      <div class="manual-test-form">
+        <select id="manual-tasktype">
+          <option value="classification">Search-term classification</option>
+          <option value="structure">Campaign structure audit</option>
+        </select>
+        <input
+          id="manual-input"
+          type="text"
+          placeholder="e.g. nike air max running shoes"
+          autocomplete="off"
+        />
+        <button id="manual-run-btn">Test Input</button>
+      </div>
+      <div id="manual-result" class="manual-result" hidden></div>
+    </section>
+
+    <section class="results" id="results-section" hidden>
+      <table id="results-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Input</th>
+            <th>Category</th>
+            <th>Expected</th>
+            <th>Actual</th>
+            <th>Confidence</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="results-body"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
