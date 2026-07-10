@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Lightweight evaluation harness for validating structured LLM outputs, with a browser UI",
   "type": "module",
-  "main": "src/server.js",
+  "main": "src/app.js",
   "scripts": {
     "start": "node src/server.js"
   },
